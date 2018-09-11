@@ -13,8 +13,8 @@ from sqlalchemy.sql import desc
 app = Flask(__name__)
 api = Api(app)
 
-#app.config['JWT_SECRET_KEY'] = '466c519fb8fa45a4a0fdde6a7a55099d'
-#jwt = JWTManager(app)
+app.config['JWT_SECRET_KEY'] = 'Adicionar-algum-texto-como-chave'
+jwt = JWTManager(app)
 
 engine = create_engine('sqlite:///mydb.db', poolclass=SingletonThreadPool)
 
