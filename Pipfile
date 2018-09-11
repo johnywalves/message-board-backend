@@ -9,6 +9,7 @@ sqlalchemy = "*"
 datetime = "*"
 flask-restful = "*"
 flask-jwt-extended = "*"
+passlib = "*"
 
 [dev-packages]
 pylint = "*"

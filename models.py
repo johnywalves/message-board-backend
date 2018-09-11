@@ -20,7 +20,7 @@ class User(Base):
     password    =   Column(String(50), nullable=False)    
 
     def __repr__(self):
-        return "<User (text='%d', likes='%d', created_at=%s)>" % (self.user)
+        return "<User (user='%d')>" % (self.user)
 
 class Post(Base):
 

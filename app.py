@@ -4,6 +4,7 @@ from models import Base, User, Post, Tag, Comment
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
+from passlib.hash import pbkdf2_sha256 as sha256
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -33,12 +34,12 @@ def postJSON(post):
         return {}
 
 class loginAPI(Resource):
-    def post(self):
+    def get(self):
         session = sessionmaker(bind=engine)()
         data = request.json
         user = session.query(User).filter(User.user == data['user']).one_or_none()
         if user is not None:
-            if user.password == data['pass']:
+            if sha256.verify(data['pass'], user.password):
                 current_user = get_jwt_identity()
                 access_token = create_access_token(identity = current_user)
                 return {'token': access_token}
