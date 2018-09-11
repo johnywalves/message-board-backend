@@ -32,24 +32,18 @@ def postJSON(post):
     else:
         return {}
 
-class echo(Resource):
-    def get(self):        
-        return jsonify(request.json)
-
-    @jwt_required
-    def post(self):        
-        return jsonify(request.json)
-
 class loginAPI(Resource):
     def post(self):
         session = sessionmaker(bind=engine)()
         data = request.json
         user = session.query(User).filter(User.user == data['user']).one_or_none()
-        if user is None:
-
-            current_user = get_jwt_identity()
-            access_token = create_access_token(identity = current_user)
-            return {'token': access_token}        
+        if user is not None:
+            if user.password == data['pass']:
+                current_user = get_jwt_identity()
+                access_token = create_access_token(identity = current_user)
+                return {'token': access_token}
+            else:
+                return {}
         else:
             return {}
 
@@ -84,7 +78,6 @@ class postsAPI(Resource):
         session.add(post)
         session.commit()
 
-        # Apresetar JSON
         return postJSON(post)
 
 class postsTagAPI(Resource):
@@ -158,13 +151,10 @@ class commentAPI(Resource):
 
         return postJSON(post)
 
-api.add_resource(echo, '/echo')
 api.add_resource(loginAPI, '/v1.0/login')
-
 api.add_resource(postsAPI, '/v1.0/posts')
 api.add_resource(postsIdAPI, '/v1.0/posts/<int:id>')
 api.add_resource(postsTagAPI, '/v1.0/posts/<string:tag>')
-
 api.add_resource(likeAPI, '/v1.0/posts/<int:id>/like')
 api.add_resource(commentAPI, '/v1.0/posts/<int:id>/comments')
 
