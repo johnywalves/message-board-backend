@@ -1,6 +1,6 @@
 # Message Board (Server)
 
-Desenvolvimento em Python de API com Flask, Restful, SQLAlchemy e JWT
+Back-end para o Message Board em Python com Flask, Restful, SQLAlchemy e JWT
 
 ```{shell}
 pip install pipenv
