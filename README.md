@@ -1,6 +1,6 @@
-# Message Board (Server)
+# Message Board (Backend)
 
-Back-end para o Message Board em Python com Flask, Restful, SQLAlchemy e JWT
+Backend para o Message Board em Python com Flask, Restful, SQLAlchemy e JWT
 
 ```{shell}
 pip install pipenv
