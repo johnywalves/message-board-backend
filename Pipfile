@@ -10,6 +10,7 @@ datetime = "*"
 flask-restful = "*"
 flask-jwt-extended = "*"
 passlib = "*"
+flask-cors = "*"
 
 [dev-packages]
 pylint = "*"

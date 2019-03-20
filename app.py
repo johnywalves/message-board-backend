@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import desc
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from flask_restful import Resource, Api
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
 from passlib.hash import pbkdf2_sha256 as sha256
@@ -12,6 +13,7 @@ from controllers import loginAPI, postsAPI, postsIdAPI, postsTagAPI, likeAPI, co
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 app.config['JWT_SECRET_KEY'] = 'Adicionar-algum-texto-como-chave'
 jwt = JWTManager(app)
