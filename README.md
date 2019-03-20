@@ -15,7 +15,7 @@ pipenv shell
 Instalar os pacotes no ambiente virtual 
 
 ```{shell}
-pipenv install 
+pipenv install
 ```
 
 ## Executando
@@ -60,9 +60,15 @@ headers = {"Authorization":"Bearer <chave gerada>"}
 ```
 
 ```{python}
-post('http://localhost:5000/v1.0/posts', headers=headers, json={'text':'Lorem', 'likes':0, 'tags':[], 'comments':[]}).json()
+headers = {"Authorization": get('http://localhost:5000/v1.0/login', json={'user':'admin', 'pass':'123456'}).json()['token']}
 ```
 
 ```{python}
 get('http://localhost:5000/v1.0/posts', headers=headers).json()
 ```
+
+
+```{python}
+post('http://localhost:5000/v1.0/posts', headers=headers, json={'text':'Lorem', 'likes':0, 'tags':[], 'comments':[]}).json()
+```
+
