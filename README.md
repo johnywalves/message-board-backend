@@ -60,13 +60,14 @@ headers = {"Authorization":"Bearer <chave gerada>"}
 ```
 
 ```{python}
-headers = {"Authorization": get('http://localhost:5000/v1.0/login', json={'user':'admin', 'pass':'123456'}).json()['token']}
-```
-
-```{python}
 get('http://localhost:5000/v1.0/posts', headers=headers).json()
 ```
 
+
+
+```{python}
+headers = {"Authorization": get('http://localhost:5000/v1.0/login', json={'user':'admin', 'pass':'123456'}).json()['token']}
+```
 
 ```{python}
 post('http://localhost:5000/v1.0/posts', headers=headers, json={'text':'Lorem', 'likes':0, 'tags':[], 'comments':[]}).json()
