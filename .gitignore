@@ -1,2 +1,8 @@
-.vscode
+# Arquivos de configuração de Visual Studio Code
+.vscode/
+
+# Arquivos binários
+__pycache__/
+
+# Database SQLlite
 mydb.db

@@ -85,7 +85,7 @@ post('http://localhost:5000/v1.0/posts', headers=headers, json={'text':'Lorem', 
 
 ## Documentos
 
-Informações auxuliares para uso da API
+Informações auxiliares para uso da API
 
 [Modelos](./models.md)  
 [Mapa de Endpoints](./endpoints.md)
