@@ -8,7 +8,7 @@ Para acessar as opções com o header `{"Authorization": "Bearer <token>"}`
 
 Geração do token dos acessos por usuário e senha  
 
-> **GET**
+> **GET**  
 > /v1.0/login
 
 **Request:** [iLogin](./models.md#ilogin)  
@@ -18,45 +18,55 @@ Geração do token dos acessos por usuário e senha
 
 ### Consultar últimos posts
 
-> **GET**
+Listar últimos posts
+
+> **GET**  
 > /v1.0/posts
+
+**Request:** -
+**Response:** [iPost](./models.md#ipost)  
 
 ### Cadastrar post
 
-> **POST**
+Registrar um novo post
+
+> **POST**  
 > /v1.0/posts
+
+**Request:** [iPost](./models.md#ipost)  
+**Response:** -
 
 ### Consultar post
 
-> **GET**
+> **GET**  
 > /v1.0/posts/<int:id>
 
 ### Alterar post
 
-> **PUT**
+> **PUT**  
 > /v1.0/posts/<int:id>
 
 ### Destarcar post
 
-> **DELETE**
+> **DELETE**  
 > /v1.0/posts/<int:id>
 
 ### Consultar posts por tag
 
-> **GET**
+> **GET**  
 > /posts/<string:tag>
 
 ### Adicionar uma curtida
 
-> **POST**
+> **POST**  
 > /v1.0/posts/<int:id>/like
 
 ### Remover uma curtida
 
-> **DELETE**
+> **DELETE**  
 > /v1.0/posts/<int:id>/like
 
 ### Adicionar comentário
 
-> **POST**
+> **POST**  
 > /v1.0/posts/<int:id>/comments
