@@ -20,13 +20,13 @@ pipenv install
 
 ## Executando
 
-Alterar o trecho "Adicionar-algum-texto-como-chave" 
+Alterar o trecho `Adicionar-algum-texto-como-chave`  
 
 ```{python}
 app.config['JWT_SECRET_KEY'] = 'Adicionar-algum-texto-como-chave'
 ```
 
-Criar a base de dados 
+Criar a base de dados
 
 ```{shell}
 python create.py
@@ -40,36 +40,52 @@ flask run
 
 ## Testando
 
+Usando a biblioteca **requests**
+
 ```{shell}
 pip install requests
 ```
+
+Importar os métodos
 
 ```{python}
 from requests import put, get, post, delete
 ```
 
-Login no painel de mensagens
+**Exemplo:** login no painel de mensagens
 
 ```{python}
 get('http://localhost:5000/v1.0/login', json={'user':'admin', 'pass':'123456'}).json()
 # {'token': '<chave gerada>'}
 ```
 
+Para realizar as outras requisições é necessário um header com a chave gerada
+
 ```{python}
 headers = {"Authorization":"Bearer <chave gerada>"}
 ```
 
-```{python}
-get('http://localhost:5000/v1.0/posts', headers=headers).json()
-```
-
-
+Ou realizar a criação do header ao solicitar o token
 
 ```{python}
 headers = {"Authorization": "Bearer " + get('http://localhost:5000/v1.0/login', json={'user':'admin', 'pass':'123456'}).json()['token']}
 ```
 
+Com o headers em mãos podemos consultar os posts
+
+```{python}
+get('http://localhost:5000/v1.0/posts', headers=headers).json()
+```
+
+Ou adicionar um novo post
+
 ```{python}
 post('http://localhost:5000/v1.0/posts', headers=headers, json={'text':'Lorem', 'likes':0, 'tags':[], 'comments':[]}).json()
 ```
 
+## Documentos
+
+Informações auxuliares para uso da API
+
+[Modelos](./models.md)  
+[Mapa de Endpoints](./endpoints.md)
