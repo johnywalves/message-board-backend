@@ -9,7 +9,6 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, creat
 from passlib.hash import pbkdf2_sha256 as sha256
 
 from connection import Base, engine
-from functions import postJSON
 from models import User, Post, Tag, Comment
 
 
@@ -27,4 +26,4 @@ class commentAPI(Resource):
         session.add(comment)
         session.commit()
 
-        return postJSON(post)
+        return post.json()

@@ -1,1 +1,1 @@
-from .convertJson import postJSON
+from .convertJson import toJSON, fromJSON

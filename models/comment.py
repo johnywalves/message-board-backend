@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, ForeignKey
 
 from connection import Base, engine
+from functions import toJSON, fromJSON
 
 
 class Comment(Base):
@@ -13,3 +14,7 @@ class Comment(Base):
 
     def __repr__(self):
         return "<Comment (text='%s')>" % (self.text)
+
+    def toJson(self): return toJSON(self)
+
+    def fromJson(self, data): return fromJSON(self, data)

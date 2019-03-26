@@ -9,7 +9,6 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, creat
 from passlib.hash import pbkdf2_sha256 as sha256
 
 from connection import Base, engine
-from functions import postJSON
 from models import User, Post, Tag, Comment
 
 
@@ -17,8 +16,9 @@ class postsAPI(Resource):
     def get(self):
         session = sessionmaker(bind=engine)()
         posts = []
-        for post in session.query(Post).order_by(desc(Post.created_at)):
-            posts.append(postJSON(post))
+        for post in session.query(Post).join(Tag, Post.tags).order_by(desc(Post.created_at)):
+            print(post.tags)
+            posts.append(post.Json())
         return posts
 
     @jwt_required
@@ -45,7 +45,7 @@ class postsAPI(Resource):
         session.add(post)
         session.commit()
 
-        return postJSON(post)
+        return post.toJson()
 
 
 class postsTagAPI(Resource):
@@ -53,7 +53,8 @@ class postsTagAPI(Resource):
         session = sessionmaker(bind=engine)()
         posts = []
         for post in session.query(Post).join(Tag, Post.tags).filter(Tag.name == tag):
-            posts.append(postJSON(post))
+            
+            posts.append(post.toJson())
         return posts
 
 
@@ -61,8 +62,12 @@ class postsIdAPI(Resource):
     @jwt_required
     def get(self, id):
         session = sessionmaker(bind=engine)()
-        post = session.query(Post).filter(Post.id == id).one_or_none()
-        return postJSON(post)
+        post = session.query(Post).join(Tag, Post.tags).filter(Post.id == id).one_or_none()
+
+        if post is not None:
+            return post.toJson()
+        else:
+            return {}
 
     @jwt_required
     def put(self, id):
@@ -76,7 +81,7 @@ class postsIdAPI(Resource):
             post.likes = data['likes']
             session.commit()
 
-            return postJSON(post)
+            return post.toJson()
         else:
             return {}
 

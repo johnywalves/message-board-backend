@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, ForeignKey
 
 from connection import Base, engine
+from functions import toJSON, fromJSON
 
 
 class Tag(Base):
@@ -12,3 +13,7 @@ class Tag(Base):
 
     def __repr__(self):
         return "<Tag (name='%s')>" % (self.name)
+
+    def toJson(self): return toJSON(self)
+
+    def fromJson(self, data): return fromJSON(self, data)

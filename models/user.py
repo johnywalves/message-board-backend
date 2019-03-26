@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String
 
 from connection import Base, engine
+from functions import toJSON, fromJSON
 
 
 class User(Base):
@@ -13,3 +14,7 @@ class User(Base):
 
     def __repr__(self):
         return "<User (user='%d')>" % (self.user)
+
+    def toJson(self): return toJSON(self)
+
+    def fromJson(self, data): return fromJSON(self, data)
