@@ -18,6 +18,8 @@ Geração do token dos acessos por usuário e senha
 
 ## Manipulação de Posts
 
+Consultar, Adicionar ou Descartar posts
+
 ### Consultar últimos posts
 
 Listar últimos posts
@@ -26,7 +28,7 @@ Listar últimos posts
 > /v1.0/posts
 
 *Request:* -  
-*Response:* [iPost](./models.md#ipost)  
+*Response:* [iPost](./models.md#ipost)[]  
 
 ### Cadastrar post
 

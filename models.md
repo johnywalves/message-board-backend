@@ -34,6 +34,7 @@
 
 ```javascript
 {
+    "id": integer,
     "name": string
 }
 ```

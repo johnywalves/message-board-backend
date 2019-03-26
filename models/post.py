@@ -28,6 +28,17 @@ class Post(Base):
         str_created_at = self.created_at.strftime("%Y-%m-%d %H:%M:%S")
         return "<Post (text='%d', likes='%d', created_at=%s)>" % (self.text, self.likes, str_created_at)
 
-    def toJson(self): return toJSON(self)
+    def toJson(self):
+        instance = toJSON(self)
+
+        instance['tags'] = []
+        for tag in self.tags:
+            instance['tags'].append(tag.toJson())
+
+        instance['comments'] = []
+        for comment in self.comments:
+            instance['comments'].append(comment.toJson())            
+
+        return instance
 
     def fromJson(self, data): return fromJSON(self, data)

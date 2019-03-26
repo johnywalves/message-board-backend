@@ -3,22 +3,21 @@ import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import desc
 
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
-from passlib.hash import pbkdf2_sha256 as sha256
+from flask import Flask, request
+from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 
 from connection import Base, engine
 from models import User, Post, Tag, Comment
 
 
 class postsAPI(Resource):
+    @jwt_required
     def get(self):
         session = sessionmaker(bind=engine)()
         posts = []
-        for post in session.query(Post).join(Tag, Post.tags).order_by(desc(Post.created_at)):
-            print(post.tags)
-            posts.append(post.Json())
+        for post in session.query(Post).order_by(desc(Post.created_at)):
+            posts.append(post.toJson())
         return posts
 
     @jwt_required
@@ -30,18 +29,22 @@ class postsAPI(Resource):
         for etiqueta in data['tags']:
             tag = session.query(Tag).filter(
                 Tag.name == etiqueta['name']).first()
+
             if tag is None:
-                tag = Tag(name=etiqueta['name'])
+                tag = Tag().fromJson(tag)
                 session.add(tag)
             tags.append(tag)
 
         comments = []
         for comentario in data['comments']:
-            comment = Comment(text=comentario['text'])
+            comment = Comment().fromJson(comentario)
             session.add(comment)
             comments.append(comment)
 
-        post = Post(text=data['text'], tags=tags, comments=comments)
+        post = Post().fromJson(data)
+        post['tags'] = tags
+        post['comments'] = comments
+
         session.add(post)
         session.commit()
 
@@ -49,11 +52,11 @@ class postsAPI(Resource):
 
 
 class postsTagAPI(Resource):
+    @jwt_required
     def get(self, tag):
         session = sessionmaker(bind=engine)()
         posts = []
-        for post in session.query(Post).join(Tag, Post.tags).filter(Tag.name == tag):
-            
+        for post in session.query(Post).filter(Tag.name == tag):
             posts.append(post.toJson())
         return posts
 
@@ -62,7 +65,7 @@ class postsIdAPI(Resource):
     @jwt_required
     def get(self, id):
         session = sessionmaker(bind=engine)()
-        post = session.query(Post).join(Tag, Post.tags).filter(Post.id == id).one_or_none()
+        post = session.query(Post).filter(Post.id == id).one_or_none()
 
         if post is not None:
             return post.toJson()

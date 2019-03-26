@@ -18,7 +18,7 @@ class commentAPI(Resource):
         session = sessionmaker(bind=engine)()
         data = request.json
 
-        comment = Comment(text=data['text'])
+        comment = Comment().fromJson(data)
 
         post = session.query(Post).filter(Post.id == id).first()
         post.comments.append(comment)
